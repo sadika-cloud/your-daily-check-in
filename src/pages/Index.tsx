@@ -122,13 +122,13 @@ const Index = () => {
           return {
             questionId,
             answer: ans,
-            score: getScoreForAnswer(ans, q.isSensitive || false),
+            score: getScoreForAnswer(ans, q),
           };
         }
       );
       
-      const totalScore = calculateTotalScore(answerArray, questions);
-      const normalized = normalizeScore(totalScore);
+      const totalScore = calculateTotalScore(answerArray);
+      const normalized = normalizeScore(totalScore, questions);
       
       setResult({
         totalScore,
@@ -162,13 +162,13 @@ const Index = () => {
           return {
             questionId,
             answer: ans,
-            score: getScoreForAnswer(ans, q.isSensitive || false),
+            score: getScoreForAnswer(ans, q),
           };
         }
       );
       
-      const totalScore = calculateTotalScore(answerArray, questions);
-      const normalized = normalizeScore(totalScore);
+      const totalScore = calculateTotalScore(answerArray);
+      const normalized = normalizeScore(totalScore, questions);
       
       setResult({
         totalScore,
