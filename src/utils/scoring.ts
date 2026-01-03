@@ -62,9 +62,9 @@ export const normalizeScore = (totalScore: number): number => {
 };
 
 export const getMoodFromScore = (normalizedScore: number): ResultMood => {
-  if (normalizedScore <= 30) return 'doingOkay';
-  if (normalizedScore <= 60) return 'feelingLow';
-  if (normalizedScore <= 80) return 'needsExtraCare';
+  if (normalizedScore <= 25) return 'doingOkay';
+  if (normalizedScore <= 50) return 'feelingLow';
+  if (normalizedScore <= 75) return 'needsExtraCare';
   return 'needsSupport';
 };
 
