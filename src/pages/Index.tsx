@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnswerOption, Answer, QuestionnaireResult } from '@/types/wellness';
 import { questions, motivationalQuotes } from '@/data/questions';
@@ -11,6 +11,7 @@ import LoginPrompt from '@/components/wellness/LoginPrompt';
 import ResultCard from '@/components/wellness/ResultCard';
 import RecommendationList from '@/components/wellness/RecommendationList';
 import Header from '@/components/wellness/Header';
+import LandingInfoSection from '@/components/wellness/LandingInfoSection';
 import { ChevronRight, ChevronLeft, RotateCcw, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import { useAuth } from '@/hooks/useAuth';
@@ -90,7 +91,15 @@ const Index = () => {
   };
 
   const handleGetStarted = () => {
-    setAppState('questionnaire');
+    const infoSection = document.getElementById('info-section');
+    if (infoSection) {
+      infoSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleStartQuestionnaireFromInfo = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => setAppState('questionnaire'), 300);
   };
 
   const handleStartQuestionnaire = () => {
@@ -299,6 +308,9 @@ const Index = () => {
                 </motion.button>
               </motion.div>
             </main>
+
+            {/* Info Section */}
+            <LandingInfoSection onStartQuestionnaire={handleStartQuestionnaireFromInfo} />
           </div>
         ) : (
           <>
