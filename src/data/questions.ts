@@ -32,25 +32,25 @@ export const questions: Question[] = [
   // Stress and Pressure - 4 questions, 8 marks each = 32 total
   {
     id: 'stress-1',
-    text: 'Do you feel overwhelmed or unable to cope?',
+    text: 'Are you able to manage stress and pressure effectively?',
     category: 'stress',
     points: 8,
   },
   {
     id: 'stress-2',
-    text: 'Do you feel anxious or tense?',
+    text: 'Are you able to stay relaxed in stressful situations?',
     category: 'stress',
     points: 8,
   },
   {
     id: 'stress-3',
-    text: 'Are you experiencing mental fatigue or exhaustion?',
+    text: 'Are you able to concentrate without feeling mentally drained?',
     category: 'stress',
     points: 8,
   },
   {
     id: 'stress-4',
-    text: 'Are you having trouble focusing or concentrating?',
+    text: 'Do you find it easy to maintain concentration?',
     category: 'stress',
     points: 8,
   },
@@ -70,7 +70,7 @@ export const questions: Question[] = [
   // Safety Question - 1 question, special scoring
   {
     id: 'safety-1',
-    text: 'Are your thoughts causing distress or making you feel unsafe?',
+    text: 'Do you feel mentally safe and comfortable with your thoughts?',
     category: 'safety',
     points: 20,
     isSensitive: true,
