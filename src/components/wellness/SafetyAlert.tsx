@@ -63,11 +63,24 @@ const SafetyAlert = ({ isOpen, onClose }: SafetyAlertProps) => {
                 transition={{ delay: 0.4 }}
                 className="space-y-3 mb-6"
               >
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-card/50">
-                  <Phone className="w-5 h-5 text-primary" />
-                  <span className="text-sm text-foreground">
-                    Consider reaching out to someone you trust
-                  </span>
+                <div className="p-4 rounded-xl bg-card/50 border border-primary/20">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Phone className="w-5 h-5 text-primary" />
+                    <span className="text-sm font-semibold text-foreground">
+                      Emergency Helplines
+                    </span>
+                  </div>
+                  <div className="space-y-2 text-sm text-muted-foreground">
+                    <a href="tel:988" className="flex items-center gap-2 hover:text-primary transition-colors">
+                      <span className="font-medium text-foreground">988</span> - Suicide & Crisis Lifeline (US)
+                    </a>
+                    <a href="tel:1-800-273-8255" className="flex items-center gap-2 hover:text-primary transition-colors">
+                      <span className="font-medium text-foreground">1-800-273-8255</span> - National Suicide Prevention
+                    </a>
+                    <a href="tel:741741" className="flex items-center gap-2 hover:text-primary transition-colors">
+                      <span className="font-medium text-foreground">Text HOME to 741741</span> - Crisis Text Line
+                    </a>
+                  </div>
                 </div>
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-card/50">
                   <MessageCircle className="w-5 h-5 text-primary" />
