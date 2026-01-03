@@ -61,23 +61,15 @@ const ResultCard = ({ normalizedScore, moodResult, onViewRecommendations }: Resu
               transform="rotate(-90 50 50)"
             />
           </svg>
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center">
             <motion.span
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8 }}
-              className="text-3xl font-bold"
+              className="text-4xl font-bold"
               style={{ color: moodResult.color }}
             >
               {normalizedScore}
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-              className="text-xs text-muted-foreground"
-            >
-              /100
             </motion.span>
           </div>
         </motion.div>
