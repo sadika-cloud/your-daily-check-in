@@ -15,6 +15,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Nunito', 'sans-serif'],
+        apricots: ['Apricots', 'cursive'],
+        allura: ['Allura', 'cursive'],
       },
       colors: {
         border: "hsl(var(--border))",
