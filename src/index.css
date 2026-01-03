@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -120,7 +120,7 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Gochi Hand', cursive;
+    font-family: 'Itim', cursive;
   }
 }
 
