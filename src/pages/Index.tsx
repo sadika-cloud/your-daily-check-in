@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MoodLevel, AnswerOption, Answer, QuestionnaireResult } from '@/types/wellness';
 import { questions } from '@/data/questions';
@@ -15,6 +15,9 @@ import FloatingShapes from '@/components/wellness/FloatingShapes';
 import Header from '@/components/wellness/Header';
 import { ChevronRight, ChevronLeft, RotateCcw } from 'lucide-react';
 import { Helmet } from 'react-helmet';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 type AppState = 'landing' | 'welcome' | 'questionnaire' | 'safety-alert' | 'login-prompt' | 'results' | 'recommendations';
 
@@ -24,8 +27,69 @@ const Index = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, AnswerOption>>({});
   const [result, setResult] = useState<QuestionnaireResult | null>(null);
+  const [lastCheckIn, setLastCheckIn] = useState<{ date: string; score: number } | null>(null);
+
+  const { user } = useAuth();
+  const { toast } = useToast();
 
   const currentQuestion = questions[currentQuestionIndex];
+
+  // Fetch last check-in for returning users
+  useEffect(() => {
+    if (user) {
+      fetchLastCheckIn();
+    }
+  }, [user]);
+
+  const fetchLastCheckIn = async () => {
+    if (!user) return;
+    
+    const { data } = await supabase
+      .from('questionnaire_history')
+      .select('created_at, score')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (data) {
+      setLastCheckIn({
+        date: new Date(data.created_at).toLocaleDateString(),
+        score: data.score,
+      });
+    }
+  };
+
+  const saveQuestionnaireResult = async (normalizedScore: number, moodName: string, answerData: Answer[]) => {
+    if (!user) return;
+
+    try {
+      // Save to questionnaire_history
+      const { error: historyError } = await supabase.from('questionnaire_history').insert([
+        {
+          user_id: user.id,
+          score: normalizedScore,
+          mood: moodName,
+          answers: JSON.parse(JSON.stringify(answerData)),
+        }
+      ]);
+
+      if (historyError) throw historyError;
+
+      // Update profile with last questionnaire info
+      await supabase.from('profiles').update({
+        last_questionnaire_date: new Date().toISOString(),
+        last_score: normalizedScore,
+      }).eq('user_id', user.id);
+
+      toast({
+        title: 'Progress saved! 💚',
+        description: 'Your wellness check-in has been recorded.',
+      });
+    } catch (error) {
+      console.error('Error saving result:', error);
+    }
+  };
 
   const handleMoodSelect = (mood: MoodLevel) => {
     setSelectedMood(mood);
@@ -77,9 +141,15 @@ const Index = () => {
         completedAt: new Date(),
       });
       
-      setAppState('login-prompt');
+      // If user is already logged in, skip login prompt
+      if (user) {
+        saveQuestionnaireResult(normalized, getMoodResult(normalized).mood, answerArray);
+        setAppState('results');
+      } else {
+        setAppState('login-prompt');
+      }
     }
-  }, [currentQuestionIndex, answers]);
+  }, [currentQuestionIndex, answers, user]);
 
   const handleSafetyAlertClose = () => {
     // Continue to next question after safety alert
@@ -111,13 +181,21 @@ const Index = () => {
         completedAt: new Date(),
       });
       
-      setAppState('login-prompt');
+      // If user is already logged in, skip login prompt
+      if (user) {
+        saveQuestionnaireResult(normalized, getMoodResult(normalized).mood, answerArray);
+        setAppState('results');
+      } else {
+        setAppState('login-prompt');
+      }
     }
   };
 
   const handleLogin = () => {
-    // For now, just proceed to results
-    // In a real app, this would open a login modal
+    // Save result after login
+    if (result) {
+      saveQuestionnaireResult(result.normalizedScore, result.mood, result.answers);
+    }
     setAppState('results');
   };
 
