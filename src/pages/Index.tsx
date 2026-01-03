@@ -239,79 +239,82 @@ const Index = () => {
         <meta name="description" content="A gentle self-check-in tool to understand your mental state. Track your emotional wellness with guided questions and personalized recommendations." />
       </Helmet>
 
-      <div className="min-h-screen relative overflow-hidden">
+      <div className="relative">
         {/* Landing State - Full Background Image */}
         {appState === 'landing' ? (
-          <div 
-            className="min-h-screen w-full bg-cover bg-center bg-no-repeat flex flex-col relative"
-            style={{ backgroundImage: `url(${landingBg})` }}
-          >
-            {/* Top Left Icon */}
-            <div className="absolute top-6 left-6 z-10">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 }}
-                className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center"
-              >
-                <Sparkles className="w-6 h-6" style={{ color: '#c5482f' }} />
-              </motion.div>
+          <>
+            {/* Hero Section - exactly 100vh */}
+            <div 
+              className="h-screen w-full bg-cover bg-center bg-no-repeat flex flex-col relative"
+              style={{ backgroundImage: `url(${landingBg})` }}
+            >
+              {/* Top Left Icon */}
+              <div className="absolute top-6 left-6 z-10">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center"
+                >
+                  <Sparkles className="w-6 h-6" style={{ color: '#c5482f' }} />
+                </motion.div>
+              </div>
+
+              <main className="flex-1 flex flex-col items-end justify-center px-8 md:px-16 lg:px-24 py-20">
+                <motion.div
+                  key="landing"
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -40 }}
+                  className="text-right max-w-md"
+                >
+                  {/* Quote */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    className="mb-10"
+                  >
+                    <h1 
+                      className="font-apricots text-4xl md:text-5xl lg:text-6xl mb-3"
+                      style={{ color: '#c5482f' }}
+                    >
+                      are you ok?
+                    </h1>
+                    <p 
+                      className="font-allura text-2xl md:text-3xl lg:text-4xl"
+                      style={{ color: '#c5482f' }}
+                    >
+                      Because being ok matters
+                    </p>
+                  </motion.div>
+
+                  {/* Get Started Button */}
+                  <motion.button
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    whileHover={{ scale: 1.05, backgroundColor: '#a33a27' }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handleGetStarted}
+                    className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 text-white"
+                    style={{ backgroundColor: '#c5482f' }}
+                  >
+                    <span>Let's Get Started</span>
+                    <motion.span
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      →
+                    </motion.span>
+                  </motion.button>
+                </motion.div>
+              </main>
             </div>
 
-            <main className="flex-1 flex flex-col items-end justify-center px-8 md:px-16 lg:px-24 py-20">
-              <motion.div
-                key="landing"
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -40 }}
-                className="text-right max-w-md"
-              >
-                {/* Quote */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                  className="mb-10"
-                >
-                  <h1 
-                    className="font-apricots text-4xl md:text-5xl lg:text-6xl mb-3"
-                    style={{ color: '#c5482f' }}
-                  >
-                    are you ok?
-                  </h1>
-                  <p 
-                    className="font-allura text-2xl md:text-3xl lg:text-4xl"
-                    style={{ color: '#c5482f' }}
-                  >
-                    Because being ok matters
-                  </p>
-                </motion.div>
-
-                {/* Get Started Button */}
-                <motion.button
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  whileHover={{ scale: 1.05, backgroundColor: '#a33a27' }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={handleGetStarted}
-                  className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 text-white"
-                  style={{ backgroundColor: '#c5482f' }}
-                >
-                  <span>Let's Get Started</span>
-                  <motion.span
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    →
-                  </motion.span>
-                </motion.button>
-              </motion.div>
-            </main>
-
-            {/* Info Section */}
+            {/* Info Section - below the fold, scrolls into view */}
             <LandingInfoSection onStartQuestionnaire={handleStartQuestionnaireFromInfo} />
-          </div>
+          </>
         ) : (
           <>
             <div className="gradient-hero min-h-screen">
