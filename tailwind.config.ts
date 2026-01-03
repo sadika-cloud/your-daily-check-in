@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Gochi Hand', 'cursive'],
+        sans: ['Itim', 'cursive'],
         apricots: ['Apricots', 'cursive'],
         allura: ['Allura', 'cursive'],
       },
