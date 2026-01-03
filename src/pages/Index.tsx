@@ -1,9 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MoodLevel, AnswerOption, Answer, QuestionnaireResult } from '@/types/wellness';
+import { AnswerOption, Answer, QuestionnaireResult } from '@/types/wellness';
 import { questions } from '@/data/questions';
 import { getScoreForAnswer, calculateTotalScore, normalizeScore, getMoodResult } from '@/utils/scoring';
-import MoodSelector from '@/components/wellness/MoodSelector';
 import WelcomePopup from '@/components/wellness/WelcomePopup';
 import ProgressBar from '@/components/wellness/ProgressBar';
 import QuestionCard from '@/components/wellness/QuestionCard';
@@ -23,7 +22,6 @@ type AppState = 'landing' | 'welcome' | 'questionnaire' | 'safety-alert' | 'logi
 
 const Index = () => {
   const [appState, setAppState] = useState<AppState>('landing');
-  const [selectedMood, setSelectedMood] = useState<MoodLevel | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, AnswerOption>>({});
   const [result, setResult] = useState<QuestionnaireResult | null>(null);
@@ -91,9 +89,8 @@ const Index = () => {
     }
   };
 
-  const handleMoodSelect = (mood: MoodLevel) => {
-    setSelectedMood(mood);
-    setTimeout(() => setAppState('welcome'), 300);
+  const handleGetStarted = () => {
+    setAppState('welcome');
   };
 
   const handleStartQuestionnaire = () => {
@@ -212,7 +209,6 @@ const Index = () => {
   };
 
   const handleRetake = () => {
-    setSelectedMood(null);
     setCurrentQuestionIndex(0);
     setAnswers({});
     setResult(null);
@@ -249,29 +245,68 @@ const Index = () => {
                 exit={{ opacity: 0, y: -20 }}
                 className="max-w-2xl w-full text-center"
               >
+                {/* Calming Image */}
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.2 }}
+                  transition={{ delay: 0.1, duration: 0.6 }}
+                  className="mb-8 relative"
+                >
+                  <div className="relative mx-auto w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-glow">
+                    <img
+                      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop&q=80"
+                      alt="Peaceful mountain landscape at sunrise"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
+                  </div>
+                  
+                  {/* Floating decorative elements */}
+                  <motion.div
+                    className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-primary/20 blur-xl"
+                    animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                  />
+                  <motion.div
+                    className="absolute -bottom-4 -left-4 w-20 h-20 rounded-full bg-accent/20 blur-xl"
+                    animate={{ scale: [1.2, 1, 1.2], opacity: [0.5, 0.8, 0.5] }}
+                    transition={{ duration: 5, repeat: Infinity }}
+                  />
+                </motion.div>
+
+                {/* Title and Description */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
                   className="mb-8"
                 >
-                  <motion.span
-                    className="inline-block text-6xl md:text-7xl mb-4"
-                    animate={{ rotate: [0, -5, 5, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                  >
-                    💭
-                  </motion.span>
-                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
-                    How do you feel <br />
-                    <span className="text-primary">right now?</span>
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 leading-tight">
+                    ARE YOU OK?
                   </h1>
-                  <p className="text-lg text-muted-foreground max-w-md mx-auto">
-                    Take a moment to check in with yourself. Select the emoji that best describes your current mood.
+                  <p className="text-lg md:text-xl text-muted-foreground max-w-md mx-auto leading-relaxed">
+                    A gentle journey to understand how you're feeling right now. Take a moment for yourself.
                   </p>
                 </motion.div>
 
-                <MoodSelector selectedMood={selectedMood} onSelect={handleMoodSelect} />
+                {/* Get Started Button */}
+                <motion.button
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleGetStarted}
+                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold text-lg shadow-glow hover:shadow-xl transition-all duration-300"
+                >
+                  <span>Let's Get Started</span>
+                  <motion.span
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    💚
+                  </motion.span>
+                </motion.button>
               </motion.div>
             )}
 
