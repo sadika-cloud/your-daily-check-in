@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Nunito', 'sans-serif'],
+        sans: ['Gochi Hand', 'cursive'],
         apricots: ['Apricots', 'cursive'],
         allura: ['Allura', 'cursive'],
       },
