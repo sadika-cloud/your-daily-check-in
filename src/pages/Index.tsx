@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnswerOption, Answer, QuestionnaireResult } from '@/types/wellness';
-import { questions } from '@/data/questions';
+import { questions, motivationalQuotes } from '@/data/questions';
 import { getScoreForAnswer, calculateTotalScore, normalizeScore, getMoodResult } from '@/utils/scoring';
 import WelcomePopup from '@/components/wellness/WelcomePopup';
 import ProgressBar from '@/components/wellness/ProgressBar';
@@ -10,13 +10,13 @@ import SafetyAlert from '@/components/wellness/SafetyAlert';
 import LoginPrompt from '@/components/wellness/LoginPrompt';
 import ResultCard from '@/components/wellness/ResultCard';
 import RecommendationList from '@/components/wellness/RecommendationList';
-import FloatingShapes from '@/components/wellness/FloatingShapes';
 import Header from '@/components/wellness/Header';
 import { ChevronRight, ChevronLeft, RotateCcw } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import landingBg from '@/assets/landing-bg.png';
 
 type AppState = 'landing' | 'welcome' | 'questionnaire' | 'safety-alert' | 'login-prompt' | 'results' | 'recommendations';
 
@@ -230,64 +230,31 @@ const Index = () => {
         <meta name="description" content="A gentle self-check-in tool to understand your mental state. Track your emotional wellness with guided questions and personalized recommendations." />
       </Helmet>
 
-      <div className="min-h-screen gradient-hero relative overflow-hidden">
-        <FloatingShapes />
-        <Header />
-
-        <main className="relative z-10 min-h-screen flex items-center justify-center px-4 py-20">
-          <AnimatePresence mode="wait">
-            {/* Landing State */}
-            {appState === 'landing' && (
+      <div className="min-h-screen relative overflow-hidden">
+        {/* Landing State - Full Background Image */}
+        {appState === 'landing' ? (
+          <div 
+            className="min-h-screen w-full bg-cover bg-center bg-no-repeat flex flex-col"
+            style={{ backgroundImage: `url(${landingBg})` }}
+          >
+            <Header />
+            <main className="flex-1 flex flex-col items-center justify-center px-4 py-20">
               <motion.div
                 key="landing"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="max-w-2xl w-full text-center"
+                className="text-center max-w-xl"
               >
-                {/* Calming Image */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.1, duration: 0.6 }}
-                  className="mb-8 relative"
-                >
-                  <div className="relative mx-auto w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-glow">
-                    <img
-                      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop&q=80"
-                      alt="Peaceful mountain landscape at sunrise"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
-                  </div>
-                  
-                  {/* Floating decorative elements */}
-                  <motion.div
-                    className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-primary/20 blur-xl"
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                  />
-                  <motion.div
-                    className="absolute -bottom-4 -left-4 w-20 h-20 rounded-full bg-accent/20 blur-xl"
-                    animate={{ scale: [1.2, 1, 1.2], opacity: [0.5, 0.8, 0.5] }}
-                    transition={{ duration: 5, repeat: Infinity }}
-                  />
-                </motion.div>
-
-                {/* Title and Description */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                {/* Quote */}
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
-                  className="mb-8"
+                  className="text-lg md:text-xl text-foreground/80 italic mb-10 leading-relaxed px-4"
                 >
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 leading-tight">
-                    ARE YOU OK?
-                  </h1>
-                  <p className="text-lg md:text-xl text-muted-foreground max-w-md mx-auto leading-relaxed">
-                    A gentle journey to understand how you're feeling right now. Take a moment for yourself.
-                  </p>
-                </motion.div>
+                  "{motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)]}"
+                </motion.p>
 
                 {/* Get Started Button */}
                 <motion.button
@@ -297,7 +264,7 @@ const Index = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleGetStarted}
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold text-lg shadow-glow hover:shadow-xl transition-all duration-300"
+                  className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-primary text-primary-foreground font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   <span>Let's Get Started</span>
                   <motion.span
@@ -308,7 +275,14 @@ const Index = () => {
                   </motion.span>
                 </motion.button>
               </motion.div>
-            )}
+            </main>
+          </div>
+        ) : (
+          <>
+            <div className="gradient-hero min-h-screen">
+              <Header />
+              <main className="relative z-10 min-h-screen flex items-center justify-center px-4 py-20">
+                <AnimatePresence mode="wait">
 
             {/* Questionnaire State */}
             {appState === 'questionnaire' && (
@@ -394,8 +368,11 @@ const Index = () => {
                 />
               </motion.div>
             )}
-          </AnimatePresence>
-        </main>
+                </AnimatePresence>
+              </main>
+            </div>
+          </>
+        )}
 
         {/* Footer for retake */}
         {(appState === 'results' || appState === 'recommendations') && (
