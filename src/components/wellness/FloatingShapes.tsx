@@ -33,7 +33,7 @@ const FloatingShapes = () => {
       
       {/* Bottom left blob */}
       <motion.div
-        className="absolute -bottom-20 -left-10 w-56 h-56 rounded-full bg-wellness-peach/20 blur-3xl"
+        className="absolute -bottom-20 -left-10 w-56 h-56 rounded-full bg-wellness-mint/20 blur-3xl"
         animate={{
           x: [0, 40, 0],
           y: [0, -20, 0],

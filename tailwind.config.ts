@@ -54,13 +54,13 @@ export default {
         },
         wellness: {
           green: "hsl(var(--wellness-green))",
-          yellow: "hsl(var(--wellness-yellow))",
-          orange: "hsl(var(--wellness-orange))",
-          red: "hsl(var(--wellness-red))",
-          teal: "hsl(var(--wellness-teal))",
-          peach: "hsl(var(--wellness-peach))",
+          blue: "hsl(var(--wellness-blue))",
           lavender: "hsl(var(--wellness-lavender))",
+          mint: "hsl(var(--wellness-mint))",
+          teal: "hsl(var(--wellness-teal))",
+          sky: "hsl(var(--wellness-sky))",
           cream: "hsl(var(--wellness-cream))",
+          soft: "hsl(var(--wellness-soft))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

@@ -10,8 +10,8 @@ const scoreRanges = [
     range: '0-25',
     label: 'Doing Great! 😊',
     description: 'You\'re in a positive mental state. Keep nurturing your wellness with fun activities!',
-    color: 'hsl(145, 60%, 50%)',
-    bgColor: 'bg-wellness-green/10',
+    color: 'hsl(150, 50%, 50%)',
+    bgColor: 'bg-wellness-green/20',
     activities: [
       'Dance challenge / movement video',
       'Mini game / brain puzzle – challenge yourself',
@@ -33,8 +33,8 @@ const scoreRanges = [
     range: '25-50',
     label: 'Feeling Okay 😐',
     description: 'You\'re doing alright but could use some gentle activities to boost your mood.',
-    color: 'hsl(45, 90%, 60%)',
-    bgColor: 'bg-wellness-yellow/10',
+    color: 'hsl(210, 70%, 65%)',
+    bgColor: 'bg-wellness-blue/20',
     activities: [
       'Spin the activity wheel – yoga, doodle, walk, game',
       'Stretch + hydration combo – complete both to fill progress bar',
@@ -54,8 +54,8 @@ const scoreRanges = [
     range: '50-75',
     label: 'Needs Extra Care 🫂',
     description: 'You deserve some extra attention. Try calming activities to help you feel better.',
-    color: 'hsl(25, 90%, 55%)',
-    bgColor: 'bg-wellness-orange/10',
+    color: 'hsl(255, 45%, 70%)',
+    bgColor: 'bg-wellness-lavender/20',
     activities: [
       '5–10 min walk reminder → checkbox after done',
       'Guided mini yoga – animated video',
@@ -76,8 +76,8 @@ const scoreRanges = [
     range: '75-100',
     label: 'Needs Support 💙',
     description: 'It\'s okay to not be okay. Here are gentle, soothing activities to help you through.',
-    color: 'hsl(0, 70%, 55%)',
-    bgColor: 'bg-wellness-red/10',
+    color: 'hsl(180, 40%, 55%)',
+    bgColor: 'bg-wellness-teal/20',
     activities: [
       'Mini breathing exercise – follow circle animation for 5 min',
       'Gratitude card – type one thing you\'re thankful for → pop-up animation',
@@ -111,7 +111,7 @@ const LandingInfoSection = ({ onStartQuestionnaire }: LandingInfoSectionProps) =
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="font-apricots text-4xl md:text-5xl mb-4" style={{ color: '#c5482f' }}>
+          <h2 className="font-apricots text-4xl md:text-5xl mb-4 text-primary">
             About Our Wellness System
           </h2>
           <p className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
@@ -163,7 +163,7 @@ const LandingInfoSection = ({ onStartQuestionnaire }: LandingInfoSectionProps) =
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mb-16"
         >
-          <h3 className="font-apricots text-3xl md:text-4xl text-center mb-10" style={{ color: '#c5482f' }}>
+          <h3 className="font-apricots text-3xl md:text-4xl text-center mb-10 text-primary">
             Score Meanings & Activities
           </h3>
 
@@ -239,8 +239,7 @@ const LandingInfoSection = ({ onStartQuestionnaire }: LandingInfoSectionProps) =
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onStartQuestionnaire}
-            className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 text-white"
-            style={{ backgroundColor: '#c5482f' }}
+            className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground"
           >
             <span>Start Wellness Check</span>
             <ChevronRight className="w-5 h-5" />
