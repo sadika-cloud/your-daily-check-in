@@ -1,48 +1,38 @@
 import { AnswerOption, Answer, ResultMood, MoodResult, Question } from '@/types/wellness';
 
-export const getScoreForAnswer = (answer: AnswerOption, isSensitive: boolean): number => {
-  if (isSensitive) {
-    // Sensitive question (now positively framed): "Do you feel mentally safe..."
-    // "No" = not safe = high score (bad), "Yes" = safe = low score (good)
-    const sensitiveScores: Record<AnswerOption, number> = {
+export const getScoreForAnswer = (answer: AnswerOption, question: Pick<Question, 'points' | 'isSensitive'>): number => {
+  const points = question.points;
+
+  // Sensitive question: higher score = more concerning
+  if (question.isSensitive) {
+    const sensitiveRatios: Record<AnswerOption, number> = {
       yes: 0,
-      mostly: 5,
-      notReally: 15,
-      no: 20,
+      mostly: 0.25,
+      notReally: 0.75,
+      no: 1,
     };
-    return sensitiveScores[answer];
+
+    return Math.round(points * sensitiveRatios[answer]);
   }
 
-  // All questions are now positively framed
-  // "Yes" = good = low score, "No" = bad = high score
-  const regularScores: Record<AnswerOption, number> = {
+  // Regular questions: all positively framed
+  // Yes = good (0), No = bad (max points)
+  const regularRatios: Record<AnswerOption, number> = {
     yes: 0,
-    mostly: 4,
-    notReally: 6,
-    no: 8,
+    mostly: 0.5,
+    notReally: 0.75,
+    no: 1,
   };
-  return regularScores[answer];
+
+  return Math.round(points * regularRatios[answer]);
 };
 
-export const calculateTotalScore = (answers: Answer[], questions: Question[]): number => {
-  let total = 0;
-  
-  answers.forEach(answer => {
-    total += answer.score;
-  });
-  
-  return total;
+export const calculateTotalScore = (answers: Answer[]): number => {
+  return answers.reduce((sum, a) => sum + a.score, 0);
 };
 
-export const normalizeScore = (totalScore: number): number => {
-  // Max possible score calculation:
-  // Emotional: 3 questions × 8 max = 24
-  // Stress: 4 questions × 8 max = 32
-  // Support: 2 questions × 8 max = 16
-  // Safety: 1 question × 20 max = 20
-  // Outlook: 1 question × 8 max = 8
-  // Total max = 100
-  const maxScore = 100;
+export const normalizeScore = (totalScore: number, questions: Question[]): number => {
+  const maxScore = questions.reduce((sum, q) => sum + (q.points ?? 0), 0) || 100;
   return Math.min(100, Math.round((totalScore / maxScore) * 100));
 };
 

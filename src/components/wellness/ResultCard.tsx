@@ -54,8 +54,8 @@ const ResultCard = ({ normalizedScore, moodResult, onViewRecommendations }: Resu
               strokeDasharray={`${2 * Math.PI * 45}`}
               strokeDashoffset={2 * Math.PI * 45}
               initial={{ strokeDashoffset: 2 * Math.PI * 45 }}
-              animate={{ 
-                strokeDashoffset: 2 * Math.PI * 45 * (normalizedScore / 100) 
+              animate={{
+                strokeDashoffset: 2 * Math.PI * 45 * (1 - normalizedScore / 100),
               }}
               transition={{ delay: 0.5, duration: 1.5, ease: 'easeOut' }}
               transform="rotate(-90 50 50)"
@@ -97,7 +97,7 @@ const ResultCard = ({ normalizedScore, moodResult, onViewRecommendations }: Resu
           transition={{ delay: 0.8 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50 text-muted-foreground text-sm mb-6"
         >
-          Wellness Score: {100 - normalizedScore}/100
+          Wellness Score: {normalizedScore}/100
         </motion.div>
 
         {/* CTA */}
