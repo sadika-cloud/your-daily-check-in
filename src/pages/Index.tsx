@@ -276,14 +276,12 @@ const Index = () => {
                     className="mb-10"
                   >
                     <h1 
-                      className="font-apricots text-4xl md:text-5xl lg:text-6xl mb-3"
-                      style={{ color: '#c5482f' }}
+                      className="font-apricots text-4xl md:text-5xl lg:text-6xl mb-3 text-primary"
                     >
                       are you ok?
                     </h1>
                     <p 
-                      className="font-allura text-2xl md:text-3xl lg:text-4xl"
-                      style={{ color: '#c5482f' }}
+                      className="font-allura text-2xl md:text-3xl lg:text-4xl text-accent"
                     >
                       Because being ok matters
                     </p>
@@ -294,11 +292,10 @@ const Index = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    whileHover={{ scale: 1.05, backgroundColor: '#a33a27' }}
+                    whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleGetStarted}
-                    className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 text-white"
-                    style={{ backgroundColor: '#c5482f' }}
+                    className="inline-flex items-center gap-3 px-10 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground"
                   >
                     <span>Let's Get Started</span>
                     <motion.span

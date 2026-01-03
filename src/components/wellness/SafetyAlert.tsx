@@ -24,16 +24,16 @@ const SafetyAlert = ({ isOpen, onClose }: SafetyAlertProps) => {
             className="wellness-card max-w-md w-full text-center relative overflow-hidden"
           >
             {/* Soft gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-wellness-peach/30 to-wellness-lavender/20" />
+            <div className="absolute inset-0 bg-gradient-to-br from-wellness-blue/30 to-wellness-lavender/20" />
             
             <div className="relative z-10">
               {/* Gentle pulsing heart */}
               <motion.div
-                className="mx-auto mb-6 w-20 h-20 rounded-full bg-wellness-peach/30 flex items-center justify-center"
+                className="mx-auto mb-6 w-20 h-20 rounded-full bg-wellness-blue/30 flex items-center justify-center"
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <Heart className="w-10 h-10 text-wellness-orange" fill="currentColor" />
+                <Heart className="w-10 h-10 text-primary" fill="currentColor" />
               </motion.div>
 
               <motion.h2
