@@ -90,7 +90,7 @@ const Index = () => {
   };
 
   const handleGetStarted = () => {
-    setAppState('welcome');
+    setAppState('questionnaire');
   };
 
   const handleStartQuestionnaire = () => {
