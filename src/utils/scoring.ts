@@ -2,18 +2,19 @@ import { AnswerOption, Answer, ResultMood, MoodResult, Question } from '@/types/
 
 export const getScoreForAnswer = (answer: AnswerOption, isSensitive: boolean): number => {
   if (isSensitive) {
-    // Sensitive question: higher scores for concerning answers
+    // Sensitive question (now positively framed): "Do you feel mentally safe..."
+    // "No" = not safe = high score (bad), "Yes" = safe = low score (good)
     const sensitiveScores: Record<AnswerOption, number> = {
-      yes: 20,
-      mostly: 15,
-      notReally: 10,
-      no: 0,
+      yes: 0,
+      mostly: 5,
+      notReally: 15,
+      no: 20,
     };
     return sensitiveScores[answer];
   }
 
-  // Regular questions - note: for positive questions, "yes" = good = low score
-  // For negative questions (stress), we need to interpret differently
+  // All questions are now positively framed
+  // "Yes" = good = low score, "No" = bad = high score
   const regularScores: Record<AnswerOption, number> = {
     yes: 0,
     mostly: 4,
@@ -27,23 +28,7 @@ export const calculateTotalScore = (answers: Answer[], questions: Question[]): n
   let total = 0;
   
   answers.forEach(answer => {
-    const question = questions.find(q => q.id === answer.questionId);
-    if (question) {
-      // For stress questions (negative framing), invert the scoring
-      if (question.category === 'stress') {
-        // "Yes I feel overwhelmed" should score HIGH (bad)
-        // So we invert: yes=8, no=0
-        const invertedScores: Record<AnswerOption, number> = {
-          yes: 8,
-          mostly: 6,
-          notReally: 4,
-          no: 0,
-        };
-        total += invertedScores[answer.answer];
-      } else {
-        total += answer.score;
-      }
-    }
+    total += answer.score;
   });
   
   return total;
