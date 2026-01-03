@@ -71,14 +71,14 @@ const SafetyAlert = ({ isOpen, onClose }: SafetyAlertProps) => {
                     </span>
                   </div>
                   <div className="space-y-2 text-sm text-muted-foreground">
-                    <a href="tel:988" className="flex items-center gap-2 hover:text-primary transition-colors">
-                      <span className="font-medium text-foreground">988</span> - Suicide & Crisis Lifeline (US)
+                    <a href="tel:1166" className="flex items-center gap-2 hover:text-primary transition-colors">
+                      <span className="font-medium text-foreground">1166</span> - Mental Health Helpline (Nepal)
                     </a>
-                    <a href="tel:1-800-273-8255" className="flex items-center gap-2 hover:text-primary transition-colors">
-                      <span className="font-medium text-foreground">1-800-273-8255</span> - National Suicide Prevention
+                    <a href="tel:100" className="flex items-center gap-2 hover:text-primary transition-colors">
+                      <span className="font-medium text-foreground">100</span> - Police Emergency
                     </a>
-                    <a href="tel:741741" className="flex items-center gap-2 hover:text-primary transition-colors">
-                      <span className="font-medium text-foreground">Text HOME to 741741</span> - Crisis Text Line
+                    <a href="tel:102" className="flex items-center gap-2 hover:text-primary transition-colors">
+                      <span className="font-medium text-foreground">102</span> - Ambulance Service
                     </a>
                   </div>
                 </div>
